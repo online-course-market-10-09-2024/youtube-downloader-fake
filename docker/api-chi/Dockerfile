@@ -1,5 +1,8 @@
 FROM golang:1.22.7-alpine
 
+# Install important packages
+RUN apk add yt-dlp ffmpeg
+
 WORKDIR /api-chi
 
 # Copy package files and download
