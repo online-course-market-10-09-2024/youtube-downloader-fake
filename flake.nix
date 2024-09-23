@@ -24,6 +24,7 @@
               # Development tools
               pkgs.dbeaver-bin
               pkgs.nodejs
+              pkgs.go
 
               # Others tools
               pkgs.scc
