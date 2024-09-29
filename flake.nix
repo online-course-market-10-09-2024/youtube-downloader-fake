@@ -1,9 +1,7 @@
 {
   description = "youtube-downloader-fake nix flake";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  };
+  inputs = { nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable"; };
 
   outputs = { self, nixpkgs }:
     let
@@ -12,13 +10,10 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
-    in
-    {
+    in {
       devShells = forAllSystems (system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
+        let pkgs = nixpkgsFor.${system};
+        in {
           default = pkgs.mkShell {
             nativeBuildInputs = [
               # Development tools
@@ -26,11 +21,14 @@
               pkgs.nodejs
               pkgs.go
 
+              # Lnaguage servers
+              pkgs.gopls
+              pkgs.nixd
+
               # Others tools
               pkgs.scc
             ];
           };
-        }
-      );
+        });
     };
 }
